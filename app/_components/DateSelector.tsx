@@ -1,16 +1,15 @@
-import { isWithinInterval } from 'date-fns'
 import { DayPicker } from 'react-day-picker'
 import 'react-day-picker/dist/style.css'
 
-function isAlreadyBooked(range, datesArr) {
-  return (
-    range.from &&
-    range.to &&
-    datesArr.some((date) =>
-      isWithinInterval(date, { start: range.from, end: range.to })
-    )
-  )
-}
+// function isAlreadyBooked(range, datesArr) {
+//   return (
+//     range.from &&
+//     range.to &&
+//     datesArr.some((date) =>
+//       isWithinInterval(date, { start: range.from, end: range.to })
+//     )
+//   )
+// }
 
 function DateSelector() {
   // CHANGE
@@ -69,7 +68,7 @@ function DateSelector() {
         {range.from || range.to ? (
           <button
             className='border border-primary-800 py-2 px-4 text-sm font-semibold'
-            onClick={() => resetRange()}
+            // onClick={() => resetRange()}
           >
             Clear
           </button>

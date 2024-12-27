@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function TextExpander({ children }) {
+function TextExpander({ children }: { children: string }) {
   const [isExpanded, setIsExpanded] = useState(false)
   const displayText = isExpanded
     ? children

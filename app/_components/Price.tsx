@@ -1,6 +1,10 @@
 import { getCabinPrice } from '@/app/_lib/data-service'
 
-async function Price({ cabinId }) {
+type Props = {
+  cabinId: number
+}
+
+async function Price({ cabinId }: Props) {
   const { regularPrice, discount } = await getCabinPrice(cabinId)
 
   return (

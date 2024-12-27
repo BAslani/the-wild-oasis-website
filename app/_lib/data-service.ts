@@ -1,6 +1,7 @@
 import { eachDayOfInterval } from 'date-fns'
 import { supabase } from './supabase'
-import { CabinType } from '../_types/types'
+import { BookingType, CabinType, GuestType } from '../_types/types'
+import { notFound } from 'next/navigation'
 
 /////////////
 // GET
@@ -17,6 +18,7 @@ export async function getCabin(id: number) {
 
   if (error) {
     console.error(error)
+    notFound()
   }
 
   return data
@@ -33,7 +35,7 @@ export async function getCabinPrice(id: number) {
     console.error(error)
   }
 
-  return data
+  return data as { regularPrice: number; discount: number }
 }
 
 export const getCabins = async function () {
@@ -150,7 +152,7 @@ export async function getCountries() {
 /////////////
 // CREATE
 
-export async function createGuest(newGuest) {
+export async function createGuest(newGuest: GuestType) {
   const { data, error } = await supabase.from('guests').insert([newGuest])
 
   if (error) {
@@ -161,7 +163,7 @@ export async function createGuest(newGuest) {
   return data
 }
 
-export async function createBooking(newBooking) {
+export async function createBooking(newBooking: BookingType) {
   const { data, error } = await supabase
     .from('bookings')
     .insert([newBooking])
@@ -181,7 +183,10 @@ export async function createBooking(newBooking) {
 // UPDATE
 
 // The updatedFields is an object which should ONLY contain the updated data
-export async function updateGuest(id: number, updatedFields) {
+export async function updateGuest(
+  id: number,
+  updatedFields: Partial<GuestType>
+) {
   const { data, error } = await supabase
     .from('guests')
     .update(updatedFields)
@@ -196,7 +201,10 @@ export async function updateGuest(id: number, updatedFields) {
   return data
 }
 
-export async function updateBooking(id: number, updatedFields) {
+export async function updateBooking(
+  id: number,
+  updatedFields: Partial<BookingType>
+) {
   const { data, error } = await supabase
     .from('bookings')
     .update(updatedFields)
