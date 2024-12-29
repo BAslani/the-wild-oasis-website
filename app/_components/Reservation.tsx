@@ -1,8 +1,10 @@
 import React from 'react'
 import DateSelector from './DateSelector'
 import ReservationForm from './ReservationForm'
-import { getBookedDatesByCabinId, getSettings } from '../_lib/data-service'
-import { CabinType } from '../_types/types'
+import { getBookedDatesByCabinId, getSettings } from '@/app/_lib/data-service'
+import { CabinType } from '@/app/_types/types'
+import { auth } from '@/app/_lib/auth'
+import LoginMessage from './LoginMessage'
 
 type Props = {
   cabin: CabinType
@@ -16,6 +18,7 @@ export default async function Reservation({ cabin }: Props) {
     getBookedDatesByCabinId(id),
   ])
 
+  const session = await auth()
   return (
     <div className='grid grid-cols-2 border border-primary-800 min-h-[400px]'>
       <DateSelector
@@ -23,7 +26,11 @@ export default async function Reservation({ cabin }: Props) {
         bookedDates={bookedDates}
         cabin={cabin}
       />
-      <ReservationForm cabin={cabin} />
+      {session?.user ? (
+        <ReservationForm user={session.user} cabin={cabin} />
+      ) : (
+        <LoginMessage />
+      )}
     </div>
   )
 }
