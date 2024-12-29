@@ -45,3 +45,10 @@ export type GuestType = {
   nationality: string
   countryFlag: string
 }
+
+export type SettingsType = {
+  minBookingLength: number
+  maxBookingLength: number
+  maxGuestsPerBooking: number
+  breakfastPrice: number
+}

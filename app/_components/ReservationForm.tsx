@@ -1,6 +1,15 @@
-function ReservationForm() {
-  // CHANGE
-  const maxCapacity = 23
+'use client'
+
+import { CabinType } from '@/app/_types/types'
+import { useReservation } from './ReservationContext'
+
+type Props = {
+  cabin: CabinType
+}
+
+function ReservationForm({ cabin }: Props) {
+  const { range } = useReservation()
+  const { maxCapacity } = cabin
 
   return (
     <div className='scale-[1.01]'>
@@ -18,8 +27,12 @@ function ReservationForm() {
           <p>{user.name}</p>
         </div> */}
       </div>
-
-      <form className='bg-primary-900 py-10 px-16 text-lg flex gap-5 flex-col'>
+      {range.from && range.to && (
+        <p>
+          {String(range.from)} to {String(range.to)}
+        </p>
+      )}
+      <form className='bg-primary-900 py-10 px-16 text-lg flex gap-5 flex-col h-full'>
         <div className='space-y-2'>
           <label htmlFor='numGuests'>How many guests?</label>
           <select
