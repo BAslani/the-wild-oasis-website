@@ -20,7 +20,7 @@ export async function getCabin(id: number) {
     notFound()
   }
 
-  return data
+  return data as CabinType
 }
 
 export async function getCabinPrice(id: number) {
@@ -75,7 +75,7 @@ export async function getBooking(id: number) {
     throw new Error('Booking could not get loaded')
   }
 
-  return data
+  return data as BookingType
 }
 
 export async function getBookings(guestId: number) {

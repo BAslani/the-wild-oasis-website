@@ -1,5 +1,3 @@
-'use client'
-
 import { ReactNode } from 'react'
 import { GuestType } from '@/app/_types/types'
 import { updateGuest } from '@/app/_lib/actions'
@@ -60,7 +58,7 @@ export default function UpdateProfileForm({ children, guest }: Props) {
       </div>
 
       <div className='flex justify-end items-center gap-6'>
-        <SubmitButton />
+        <SubmitButton title='Update profile' />
       </div>
     </form>
   )
