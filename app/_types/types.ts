@@ -23,7 +23,7 @@ export type BookingType = {
   hasBreakfast: boolean
   isPaid: boolean
   observations: string
-  guests: {
+  guests?: {
     fullName: string
     email: string
     country: string

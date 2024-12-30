@@ -3,7 +3,6 @@ import { supabase } from './supabase'
 import { BookingType, CabinType, GuestType } from '../_types/types'
 import { notFound } from 'next/navigation'
 
-/////////////
 // GET
 
 export async function getCabin(id: number) {
@@ -149,7 +148,6 @@ export async function getCountries() {
   }
 }
 
-/////////////
 // CREATE
 
 export async function createGuest(newGuest: Partial<GuestType>) {
@@ -179,27 +177,7 @@ export async function createBooking(newBooking: BookingType) {
   return data
 }
 
-/////////////
 // UPDATE
-
-// The updatedFields is an object which should ONLY contain the updated data
-export async function updateGuest(
-  id: number,
-  updatedFields: Partial<GuestType>
-) {
-  const { data, error } = await supabase
-    .from('guests')
-    .update(updatedFields)
-    .eq('id', id)
-    .select()
-    .single()
-
-  if (error) {
-    console.error(error)
-    throw new Error('Guest could not be updated')
-  }
-  return data
-}
 
 export async function updateBooking(
   id: number,
@@ -215,19 +193,6 @@ export async function updateBooking(
   if (error) {
     console.error(error)
     throw new Error('Booking could not be updated')
-  }
-  return data
-}
-
-/////////////
-// DELETE
-
-export async function deleteBooking(id: number) {
-  const { data, error } = await supabase.from('bookings').delete().eq('id', id)
-
-  if (error) {
-    console.error(error)
-    throw new Error('Booking could not be deleted')
   }
   return data
 }
