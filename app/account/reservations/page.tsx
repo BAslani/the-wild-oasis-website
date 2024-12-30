@@ -1,4 +1,4 @@
-import ReservationCard from '@/app/_components/ReservationCard'
+import ReservationsList from '@/app/_components/ReservationsList'
 import { auth } from '@/app/_lib/auth'
 import { getBookings } from '@/app/_lib/data-service'
 import { BookingType } from '@/app/_types/types'
@@ -25,14 +25,7 @@ export default async function Page() {
           </a>
         </p>
       ) : (
-        <ul className='space-y-6'>
-          {bookings.map((booking) => (
-            <ReservationCard
-              booking={booking as unknown as BookingType}
-              key={booking.id}
-            />
-          ))}
-        </ul>
+        <ReservationsList bookings={bookings as unknown as BookingType[]} />
       )}
     </div>
   )
