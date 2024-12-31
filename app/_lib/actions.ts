@@ -5,6 +5,7 @@ import { auth, signIn, signOut } from './auth'
 import { supabase } from './supabase'
 import { getBookings } from './data-service'
 import { redirect } from 'next/navigation'
+import { BookingExtraData } from '../_components/ReservationForm'
 
 const regex = /^[a-zA-Z0-9]{6,12}$/
 
@@ -37,6 +38,36 @@ export async function updateGuest(formData: FormData) {
   revalidatePath('/account/profile')
 }
 
+export async function createBooking(
+  bookingData: BookingExtraData,
+  formData: FormData
+) {
+  const session = await auth()
+  if (!session) throw new Error('You must be logged in')
+
+  const newBooking = {
+    ...bookingData,
+    guestId: session.user.guestId,
+    numGuests: Number(formData.get('numGuests')),
+    observations: formData.get('observations')?.slice(0, 1000),
+    extrasPrice: 0,
+    totalPrice: bookingData.cabinPrice,
+    status: 'unconfirmed',
+    hasBreakfast: false,
+    isPaid: false,
+  }
+
+  const { error } = await supabase.from('bookings').insert([newBooking])
+
+  if (error) {
+    console.error(error)
+    throw new Error('Booking could not be created')
+  }
+
+  revalidatePath(`/cabins/${bookingData.cabinId}`)
+  redirect('/cabins/thankyou')
+}
+
 export async function updateReservation(formData: FormData) {
   const bookingId = Number(formData.get('bookingId'))
   const session = await auth()
@@ -44,9 +75,6 @@ export async function updateReservation(formData: FormData) {
 
   const guestBookings = await getBookings(session.user.guestId)
   const guestBookingIds = guestBookings.map((booking) => booking.id)
-
-  console.log('BOOKING_ID', bookingId)
-  console.log('BOOKING_IDS', guestBookingIds)
 
   if (!guestBookingIds.includes(bookingId))
     throw new Error('Not authorized action')

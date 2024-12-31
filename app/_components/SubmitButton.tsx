@@ -4,9 +4,10 @@ import { useFormStatus } from 'react-dom'
 
 type Props = {
   title: string
+  pendigLabel: string
 }
 
-export default function SubmitButton({ title }: Props) {
+export default function SubmitButton({ title, pendigLabel }: Props) {
   const { pending } = useFormStatus()
 
   return (
@@ -14,7 +15,7 @@ export default function SubmitButton({ title }: Props) {
       disabled={pending}
       className='bg-accent-500 px-8 py-4 text-primary-800 font-semibold hover:bg-accent-600 transition-all disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300'
     >
-      {pending ? 'Updating...' : title}
+      {pending ? pendigLabel : title}
     </button>
   )
 }

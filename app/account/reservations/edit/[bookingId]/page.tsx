@@ -12,7 +12,6 @@ export default async function Page({ params }: Props) {
   const reservationId = Number(params.bookingId)
   const booking = await getBooking(reservationId)
   const { maxCapacity } = await getCabin(booking.cabinId)
-  console.log('RESERVATION_ID', reservationId)
 
   return (
     <div>
@@ -56,7 +55,7 @@ export default async function Page({ params }: Props) {
         </div>
 
         <div className='flex justify-end items-center gap-6'>
-          <SubmitButton title='Update reservation' />
+          <SubmitButton title='Update reservation' pendigLabel='Updating...' />
         </div>
         <input type='hidden' name='bookingId' value={reservationId} />
       </form>

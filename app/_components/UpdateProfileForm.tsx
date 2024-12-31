@@ -58,7 +58,7 @@ export default function UpdateProfileForm({ children, guest }: Props) {
       </div>
 
       <div className='flex justify-end items-center gap-6'>
-        <SubmitButton title='Update profile' />
+        <SubmitButton title='Update profile' pendigLabel='Updating...' />
       </div>
     </form>
   )
