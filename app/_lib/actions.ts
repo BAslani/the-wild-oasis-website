@@ -11,7 +11,8 @@ const regex = /^[a-zA-Z0-9]{6,12}$/
 
 export async function updateGuest(formData: FormData) {
   const session = await auth()
-  if (!session?.user) throw new Error('You must be logged in')
+  if (!session) throw new Error('You must be logged in')
+  const guestId = session.user.guestId || 0
   const nationalID = formData.get('nationalID')
   const [nationality, countryFlag] = (
     formData.get('nationality') as string
@@ -29,7 +30,7 @@ export async function updateGuest(formData: FormData) {
   const { error } = await supabase
     .from('guests')
     .update(updateData)
-    .eq('id', session.user.guestId)
+    .eq('id', guestId)
 
   if (error) {
     throw new Error('Guest could not be updated')
