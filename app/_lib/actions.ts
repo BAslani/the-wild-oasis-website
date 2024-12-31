@@ -11,7 +11,7 @@ const regex = /^[a-zA-Z0-9]{6,12}$/
 
 export async function updateGuest(formData: FormData) {
   const session = await auth()
-  if (!session) throw new Error('You must be logged in')
+  if (!session?.user) throw new Error('You must be logged in')
   const nationalID = formData.get('nationalID')
   const [nationality, countryFlag] = (
     formData.get('nationality') as string
